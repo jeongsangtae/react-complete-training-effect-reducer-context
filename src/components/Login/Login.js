@@ -12,6 +12,14 @@ const Login = (props) => {
   const [formIsValid, setFormIsValid] = useState(false);
 
   useEffect(() => {
+    console.log("effect running");
+
+    return () => {
+      console.log("effect cleanup");
+    };
+  }, []);
+
+  useEffect(() => {
     const identifier = setTimeout(() => {
       console.log("checking form validity!");
       setFormIsValid(
@@ -19,9 +27,12 @@ const Login = (props) => {
       );
     }, 500);
 
+    // Cleanup 함수 설정
     return () => {
       console.log("clean up");
-      clearTimeout(identifier);
+      // 여기서 Side Effet 정리 작업을 수행한다.
+      // 예로 타이머 제거, 구독 해제 등을 여기에서 처리
+      clearTimeout(identifier); // 타이머 제거 처리
     };
   }, [enteredEmail, enteredPassword]);
 
